@@ -19,6 +19,7 @@ Agree on a bounded question and name the version reviewed. State what evidence w
 - **Research protocol:** does the proposed method answer the question? Check the population, definitions, planned analysis, access to evidence, uncertainty and stopping conditions. A protocol describes a plan; do not score it as though results already exist.
 - **Research findings:** do the sources support the claims, do definitions and periods match, and can the stated calculations be reproduced?
 - **Software or a tool:** does the documented behaviour match what you can inspect or safely test? Name the tested environment and untested paths.
+- **Guide, lesson plan or policy draft:** check the stated audience, sources, practical steps and limits. Identify missing expertise rather than treating peer feedback as professional approval.
 - **Design or another artefact:** assess its stated purpose and audience. Distinguish observed problems from personal preferences.
 
 Use the [review steps](README.md#review-steps) for evidence, reproducibility, existing alternatives and limits. If the work needs expertise you do not have, say so. A scoped peer review is not professional certification.
@@ -33,7 +34,7 @@ Use the [review steps](README.md#review-steps) for evidence, reproducibility, ex
 
 Give one verdict:
 
-- **supported**: the repository or a cited source shows it, and you quote the words or give the file and line.
+- **supported**: the repository or a cited source shows it, and you quote the words or give the file and line or page.
 - **partly supported**: some of it holds; say which part does not.
 - **not supported**: you looked and could not find support; say where you looked.
 - **contradicted**: something in the repository or a source says otherwise; quote it.

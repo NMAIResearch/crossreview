@@ -3,6 +3,12 @@ description: Ask for a review of something you made with AI. After your first, e
 title: "[submission] "
 labels: ["submission"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before you submit: everything here is public.** The issue and linked project folder are public on GitHub. Use a public, fictional or redacted example; keep confidential client, patient, pupil and employer material out of both your submission and anything you give an AI assistant.
+
+        Documents are welcome; code is not required. You need a GitHub account and a public repository (a public project folder) with a README file at the top level. The pre-check does not read PDF, Word, spreadsheet or image contents or look for personal information.
   - type: input
     id: domain
     attributes:
@@ -13,7 +19,7 @@ body:
     id: repo
     attributes:
       label: Repository URL
-      description: A public GitHub repository, for example https://github.com/you/project
+      description: A public GitHub repository (a public project folder) with a top-level README, for example https://github.com/you/project. Documents are fine.
       placeholder: https://github.com/you/project
     validations:
       required: true

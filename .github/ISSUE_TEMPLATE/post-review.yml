@@ -22,7 +22,7 @@ body:
     id: first
     attributes:
       label: First pass, before reading the author's explanation
-      description: For each listed claim, your verdict (supported, partly supported, not supported, contradicted, not checked) with a quote or a file and line.
+      description: For each listed claim, your verdict (supported, partly supported, not supported, contradicted, not checked) with a quote or a file and line or page.
     validations:
       required: true
   - type: textarea
