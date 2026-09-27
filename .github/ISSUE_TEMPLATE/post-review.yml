@@ -1,0 +1,52 @@
+name: Post a review
+description: Review someone else's submission using the rubric. Each review you give earns one submission credit.
+title: "[review] #"
+labels: ["review"]
+body:
+  - type: markdown
+    attributes:
+      value: "Choose a project in your domain if you can, but this is optional. Review the evidence and state your limits. Close your Start a review notice when this review is posted."
+  - type: input
+    id: submission
+    attributes:
+      label: Submission issue number
+      description: The number of the submission you reviewed, for example 12. It cannot be your own.
+    validations:
+      required: true
+  - type: textarea
+    id: domain_experience
+    attributes:
+      label: Your domain experience (optional)
+      description: Relevant work, study, practical experience or an outside perspective. Self-described context, not a verified qualification or an automatic weight.
+  - type: textarea
+    id: first
+    attributes:
+      label: First pass, before reading the author's explanation
+      description: For each listed claim, your verdict (supported, partly supported, not supported, contradicted, not checked) with a quote or a file and line.
+    validations:
+      required: true
+  - type: textarea
+    id: blocking
+    attributes:
+      label: Blocking problems
+      description: Anything that makes the project unsafe or its main claim false.
+  - type: textarea
+    id: other
+    attributes:
+      label: Other problems
+  - type: textarea
+    id: after
+    attributes:
+      label: After reading the author's explanation
+      description: Anything that changed, and why. Leave your first pass as it was.
+  - type: textarea
+    id: unchecked
+    attributes:
+      label: What you did not check
+    validations:
+      required: true
+  - type: input
+    id: tools
+    attributes:
+      label: Tools used
+      description: Any AI you used for the review, and its vendor.

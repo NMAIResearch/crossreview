@@ -1,0 +1,5 @@
+# Purpose: keep private work and generated interpreter caches out of releases.
+__pycache__/
+*.pyc
+_work/
+local-preview-cinema/

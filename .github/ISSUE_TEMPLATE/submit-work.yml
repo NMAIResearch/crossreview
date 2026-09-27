@@ -1,0 +1,50 @@
+name: Submit AI work for review
+description: Ask for a review of something you made with AI. After your first, each submission needs one review you have given.
+title: "[submission] "
+labels: ["submission"]
+body:
+  - type: input
+    id: domain
+    attributes:
+      label: Project domain (optional)
+      description: The subject or area of work, to help reviewers find projects they understand. Cross-domain reviews are welcome.
+      placeholder: For example, education, energy, data analysis or web accessibility
+  - type: input
+    id: repo
+    attributes:
+      label: Repository URL
+      description: A public GitHub repository, for example https://github.com/you/project
+      placeholder: https://github.com/you/project
+    validations:
+      required: true
+  - type: textarea
+    id: claims
+    attributes:
+      label: What it claims to do
+      description: One claim per line. Reviewers check these one by one.
+      placeholder: |
+        1. Converts CSV files to JSON without losing rows.
+        2. Runs offline.
+    validations:
+      required: true
+  - type: textarea
+    id: tools
+    attributes:
+      label: AI tools used
+      description: Which models or tools wrote or changed the work, and roughly how much.
+    validations:
+      required: true
+  - type: textarea
+    id: known
+    attributes:
+      label: Problems you already know about
+      description: You are the one most likely to spot them. Listing them helps the reviewer decide what matters.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Terms
+      options:
+        - label: I will give one review for each submission after my first.
+          required: true
+        - label: The repository contains no passwords, keys or personal data that should not be public.
+          required: true

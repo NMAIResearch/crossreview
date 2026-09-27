@@ -1,0 +1,93 @@
+name: Pre-check submission
+
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+
+concurrency:
+  group: crossreview-precheck-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  precheck:
+    if: contains(github.event.issue.labels.*.name, 'submission') && (github.event.action != 'labeled' || github.event.label.name == 'submission')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Mark the result pending
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_number = context.issue.number;
+            await github.rest.issues.addLabels({ ...context.repo, issue_number, labels: ['precheck-pending'] });
+            const { data: issue } = await github.rest.issues.get({ ...context.repo, issue_number });
+            for (const label of issue.labels) {
+              if (['precheck-passed', 'precheck-failed'].includes(label.name)) {
+                await github.rest.issues.removeLabel({ ...context.repo, issue_number, name: label.name });
+              }
+            }
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Find the repository URL
+        id: url
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          url=$(python3 -c 'import os, sys; sys.path.insert(0, "tools"); import reciprocity; print(reciprocity.parse_repo_url(os.environ["BODY"]) or "")')
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Clone without running anything
+        if: steps.url.outputs.url != ''
+        env:
+          URL: ${{ steps.url.outputs.url }}
+          GIT_TERMINAL_PROMPT: "0"
+          GIT_LFS_SKIP_SMUDGE: "1"
+        run: |
+          timeout 120 git -c core.hooksPath=/dev/null clone --depth 1 --no-recurse-submodules --config core.symlinks=false "$URL" submitted
+          git -C submitted rev-parse HEAD > reviewed-commit.txt
+      - name: Run the static pre-check
+        if: steps.url.outputs.url != ''
+        id: check
+        run: |
+          set +e
+          python3 tools/precheck.py submitted > precheck.md
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Report
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          URL: ${{ steps.url.outputs.url }}
+          CODE: ${{ steps.check.outputs.code }}
+          BODY: ${{ github.event.issue.body }}
+        with:
+          script: |
+            const fs = require('fs');
+            const issue = context.issue.number;
+            const { data: current } = await github.rest.issues.get({ ...context.repo, issue_number: issue });
+            if (current.body !== process.env.BODY) {
+              core.notice('The submission changed during checking; this result will not clear the pending state.');
+              return;
+            }
+            let body, label;
+            if (!process.env.URL) {
+              body = 'No public GitHub repository URL was found. Edit the submission to add one, such as https://github.com/you/project.';
+              label = 'precheck-failed';
+            } else if (fs.existsSync('precheck.md') && ['0','1','2'].includes(process.env.CODE)) {
+              body = fs.readFileSync('precheck.md', 'utf8');
+              label = process.env.CODE === '0' ? 'precheck-passed' : 'precheck-failed';
+              if (fs.existsSync('reviewed-commit.txt')) body += '\n\nChecked commit: `' + fs.readFileSync('reviewed-commit.txt', 'utf8').trim() + '`.';
+            } else {
+              body = 'The repository could not be fetched or the check did not complete. No pass is recorded. Edit this submission to retry.';
+              label = 'precheck-failed';
+            }
+            await github.rest.issues.createComment({ ...context.repo, issue_number: issue, body });
+            for (const old of ['precheck-passed', 'precheck-failed', 'precheck-pending']) {
+              if (old !== label && current.labels.some(l => l.name === old)) {
+                await github.rest.issues.removeLabel({ ...context.repo, issue_number: issue, name: old });
+              }
+            }
+            await github.rest.issues.addLabels({ ...context.repo, issue_number: issue, labels: [label] });

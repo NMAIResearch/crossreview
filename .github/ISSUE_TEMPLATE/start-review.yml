@@ -1,0 +1,21 @@
+# Purpose: declare a review in progress without awarding completed-review credit.
+name: Start a review
+description: Let people know which submission you have picked up. Multiple reviewers are welcome.
+title: "[review in progress] #"
+labels: ["review-in-progress"]
+body:
+  - type: markdown
+    attributes:
+      value: "Pick a project in your domain if you can; this is optional. This notice earns no review credit. Close it when you post your review or stop working on it."
+  - type: input
+    id: submission
+    attributes:
+      label: Submission issue number
+      description: The number of someone else's submission, for example 12. Check the queue for people already reviewing it.
+    validations:
+      required: true
+  - type: input
+    id: focus
+    attributes:
+      label: Review focus (optional)
+      description: The part you plan to check, so other reviewers can cover a different part if useful.
