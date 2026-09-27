@@ -8,6 +8,7 @@
   <meta name="color-scheme" content="dark">
   <title>crossreview | review for review</title>
   <link rel="stylesheet" href="style.css">
+  <script src="branching-field.js" defer></script>
   <script src="page.js" defer></script>
   <script src="review-board.js" defer></script>
   <script src="site.js" defer></script>
@@ -29,6 +30,7 @@
       <span id="credit-kind">Artwork by</span>
       <a id="credit-artist" href="https://nmairesearch.github.io/" target="_blank" rel="noopener noreferrer">NMAI Research</a>
       <span id="credit-work">‘POV’ · 2026</span>
+      <span class="credit-tool">Generated with Gemini</span>
     </div>
     <div class="hero-copy">
       <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> A different perspective</p>
@@ -58,8 +60,13 @@
       <section class="intro" aria-labelledby="intro-title">
         <p class="eyebrow">The exchange</p>
         <div><h2 id="intro-title">Review for <span>review.</span></h2>
-          <p class="lead">Review for review. Swap reviews of work you made with AI: give one, get one. Projects now outpace reviewers; this makes checking them a fair trade.</p>
+          <p class="lead">Think your project works, or could work, but have no one to ask? Swap reviews of work made with AI: give one, get one.</p>
+          <p class="lead">Crossreview is for AI builders and reviewers who are willing to ask for help, receive critique and exchange solutions. The aim is useful work grounded in evidence, with less sycophancy and more honest critique.</p>
+          <p class="lead">Bring a research protocol, an analysis, a tool, a design or another project made with AI. Say what you want checked. A review is another person's assessment, not a guarantee of correctness or safety. Submitting does not guarantee a reviewer.</p>
+          <p class="lead">You do not have to be an expert. If you have experience in a domain, share it. A mathematician may need a lawyer's perspective, a chess player a visual designer, or an astrophysicist a medical professional. Say what you can assess and where your knowledge ends.</p>
+          <p class="lead">What you need may already exist. Ask your agent to search GitHub and Hugging Face for relevant tools before building something new. <a class="text-link" href="https://github.com/NMAIResearch/crossreview#look-for-an-existing-solution-first">Look for an existing solution <span aria-hidden="true">↗</span></a></p>
           <div class="actions"><a class="button" href="https://github.com/NMAIResearch/crossreview/issues/new?template=submit-work.yml">Submit your work <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/NMAIResearch/crossreview/issues?q=is%3Aissue+is%3Aopen+label%3Asubmission">Review someone's work <span aria-hidden="true">↗</span></a></div>
+          <p class="lead" style="margin-top: 28px">Not a coder? Neither am I. <a class="text-link" href="https://github.com/NMAIResearch/crossreview#not-a-coder">Give this prompt to your agent <span aria-hidden="true">↗</span></a></p>
         </div>
       </section>
 
@@ -67,7 +74,7 @@
         <div class="section-head"><h2 id="process-title">How it works</h2><span class="quiet">A little structure. Another perspective.</span></div>
         <ol class="steps">
           <li><span class="step-number" aria-hidden="true">01</span><h3>Bring your work.</h3><p>Submit a public repo, its claims, the AI tools used and the problems you already know about.</p></li>
-          <li><span class="step-number" aria-hidden="true">02</span><h3>Check the basics.</h3><p>An automatic pre-check reads it without running it: README, licence, leaked keys, broken files.</p></li>
+          <li><span class="step-number" aria-hidden="true">02</span><h3>Check the basics.</h3><p>An automatic pre-check reads the repo without running submitted code. It checks basic files and selected credential patterns; it does not establish correctness or security.</p></li>
           <li><span class="step-number" aria-hidden="true">03</span><h3>Look a little closer.</h3><p>Choose a project in your domain if you can. Other perspectives are welcome. Mark it as picked up, then review each claim with quotes or file and line.</p></li>
           <li><span class="step-number" aria-hidden="true">04</span><h3>Keep it moving.</h3><p>Your first submission is free. After that, give one review per submission.</p></li>
         </ol>
@@ -76,8 +83,8 @@
       <section class="roles" aria-labelledby="roles-title">
         <div class="section-head"><h2 id="roles-title">Two roles</h2><a class="text-link" href="https://github.com/NMAIResearch/crossreview/blob/main/RUBRIC.md">Read the rubric <span aria-hidden="true">↗</span></a></div>
         <div class="role-grid">
-          <article><span class="role-symbol" aria-hidden="true">↗</span><h3>Sight, the author</h3><p>List the problems you already see. Makers often spot them and let them through.</p></article>
-          <article><span class="role-symbol" aria-hidden="true">↙</span><h3>Severity, the reviewer</h3><p>A stranger decides what holds up and what should block. If AI helps, use one from a different vendor than the one that made the work.</p></article>
+          <article><span class="role-symbol" aria-hidden="true">↗</span><h3>Sight, the author</h3><p>Explain the project's purpose, what you want checked and the problems you already know about. You decide what to change after reviewing the findings.</p></article>
+          <article><span class="role-symbol" aria-hidden="true">↙</span><h3>Severity, the reviewer</h3><p>Match the review to the work: a protocol needs its method checked; a tool needs its behaviour checked. Report evidence and limits. If AI helps, use a different vendor from the maker; that alone does not establish independence.</p></article>
         </div>
       </section>
 

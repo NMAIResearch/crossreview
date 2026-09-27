@@ -112,57 +112,28 @@
   const reading = document.querySelector(".reading");
   let width = 0;
   let height = 0;
-  let branches = [];
-  let particles = [];
+  const field = typeof window.CrossreviewBranchingField === "function"
+    ? new window.CrossreviewBranchingField() : null;
 
-  // Fixed geometry prevents layout changes from reallocating an unbounded particle field.
+  // Resizing changes the drawing scale, never the accumulated lineage.
   function sizeBackground() {
     const box = reading.getBoundingClientRect();
     width = box.width;
     height = box.height;
-    const scale = Math.min(devicePixelRatio || 1, 1.5);
+    // Bound raster storage even when the review queue makes the page very tall.
+    const scale = Math.min(devicePixelRatio || 1, 1.5,
+      Math.sqrt(4000000 / Math.max(1, width * height)));
     canvas.width = Math.round(width * scale);
     canvas.height = Math.round(height * scale);
     if (!ctx) return;
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    let seed = 7349;
-    const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    branches = [];
-    function branch(x, y, angle, length, depth) {
-      const endX = x + Math.cos(angle) * length;
-      const endY = y + Math.sin(angle) * length;
-      branches.push({ x, y, endX, endY, bend: (random() - .5) * 45, phase: random() * Math.PI * 2, depth });
-      if (depth < 5) {
-        branch(endX, endY, angle - .3 - random() * .5, length * .71, depth + 1);
-        branch(endX, endY, angle + .3 + random() * .5, length * .71, depth + 1);
-      }
-    }
-    for (let i = 0; i < 4; i++) {
-      branch(width * (i % 2 ? .84 : .12), height * (.18 + i * .22), i % 2 ? 3.6 : -.6, Math.min(width * .15, 180), 0);
-    }
-    particles = Array.from({ length: 75 }, () => ({ x: random() * width, y: random() * height, phase: random() * 6.28, r: .6 + random() * 1.4 }));
     drawBackground(elapsed);
   }
 
   function drawBackground(time) {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, width, height);
-    ctx.lineCap = "round";
-    for (const b of branches) {
-      const drift = Math.sin(time * .00014 + b.phase) * 3;
-      ctx.strokeStyle = `rgba(158,195,171,${.22 + .16 * Math.sin(time * .0003 + b.phase)})`;
-      ctx.lineWidth = Math.max(.45, 1.25 - b.depth * .13);
-      ctx.beginPath();
-      ctx.moveTo(b.x, b.y);
-      ctx.quadraticCurveTo((b.x + b.endX) / 2 + b.bend + drift, (b.y + b.endY) / 2, b.endX, b.endY);
-      ctx.stroke();
-    }
-    for (const p of particles) {
-      const x = p.x + Math.sin(time * .00011 + p.phase) * 18;
-      const y = p.y + Math.cos(time * .00008 + p.phase) * 12;
-      ctx.fillStyle = `rgba(208,233,175,${.22 + .18 * Math.sin(time * .0006 + p.phase)})`;
-      ctx.beginPath(); ctx.arc(x, y, p.r, 0, Math.PI * 2); ctx.fill();
-    }
+    if (!ctx || !field) return;
+    field.advance(time);
+    field.draw(ctx, width, height, time);
   }
 
   function tick(time) {
