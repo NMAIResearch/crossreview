@@ -7,12 +7,15 @@
       this.nodes = [];
       this.branches = [];
       this.nextId = 0;
-      this.maxNodes = 72;
-      this.maxBranches = 240;
+      this.maxNodes = 120;
+      this.maxBranches = 400;
       this.time = -48000;
+      this.origin = this.time;
       this.addNode(.09, .94, 1, -48000, 6);
-      this.addNode(.90, .66, -1, -48000, 3);
+      this.addNode(.90, .66, -1, -48000, 7);
       this.addNode(.08, .36, 1, -48000, 9);
+      this.addNode(.93, .97, -1, -48000, 7);
+      this.addNode(.92, .34, -1, -48000, 7);
       for (let time = -47000; time <= 0; time += 1000) this.advance(time);
     }
 
@@ -39,15 +42,19 @@
 
     sprout(parent, time, ambient = false) {
       if (this.branches.length >= this.maxBranches) return false;
-      const spread = (this.random() - .5) * .18;
-      const x = Math.max(.02, Math.min(.98, parent.x + parent.direction * (.025 + this.random() * .08) + spread));
-      const y = Math.max(.018, parent.y - .015 - this.random() * .055);
+      // Each offshoot picks its own side, so a lineage grows upright instead of drifting one way.
+      const side = this.random() < .5 ? -1 : 1;
+      const spread = (this.random() - .5) * .05;
+      const x = Math.max(.02, Math.min(.98, parent.x + side * (.012 + this.random() * .05) + spread));
+      const y = Math.max(.018, parent.y - .02 - this.random() * .06);
       if (Math.abs(x - parent.x) < .004 || parent.y < .03) return false;
-      const lasting = !ambient && this.nodes.length + this.branches.filter(b => b.lasting && !b.settled).length < this.maxNodes && this.random() < .40;
+      // Starting trunks establish more reliably so every tree becomes visible.
+      const chance = parent.born === this.origin ? .80 : .40;
+      const lasting = !ambient && this.nodes.length + this.branches.filter(b => b.lasting && !b.settled).length < this.maxNodes && this.random() < chance;
       this.branches.push({parentId: parent.id, x: parent.x, y: parent.y,
         endX: x, endY: y, born: time, duration: 2800 + this.random() * 6500,
         hold: 2000 + this.random() * 5000, fade: 3500 + this.random() * 5000,
-        lasting, settled: false, direction: parent.direction,
+        lasting, settled: false, direction: side,
         phase: this.random() * Math.PI * 2});
       return true;
     }

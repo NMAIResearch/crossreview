@@ -66,3 +66,24 @@ test('invalid or reversed time does not rewrite the lineage', () => {
   f.advance(NaN);f.advance(Infinity);f.advance(-1);
   assert.equal(JSON.stringify(f),before);
 });
+
+test('five starting trees each establish a lasting branch', () => {
+  for(const seed of [1,7349,98217]){
+    const f=new Field(seed);const roots=f.nodes.filter(n=>n.born===f.origin);
+    assert.equal(roots.length,5);
+    for(let t=1000;t<=120000;t+=1000)f.advance(t);
+    for(const root of roots)assert.ok(f.branches.some(b=>b.parentId===root.id&&b.lasting));
+  }
+});
+
+test('growth is balanced between left and right rather than leaning one way', () => {
+  for(const seed of [1,7349,98217]){
+    const f=new Field(seed);const seen=new Set();let right=0;
+    for(let t=1000;t<=600000;t+=1000){
+      f.advance(t);
+      for(const b of f.branches){if(seen.has(b))continue;seen.add(b);if(b.endX>b.x)right++;}
+    }
+    const share=right/seen.size;
+    assert.ok(share>.40&&share<.60,`rightward share ${share}`);
+  }
+});
