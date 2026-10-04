@@ -33,6 +33,16 @@ body:
         2. Runs offline.
     validations:
       required: true
+  - type: dropdown
+    id: report_preference
+    attributes:
+      label: Preferred supporting report (optional)
+      description: The reviewer supplies one human or agent report. Your preference guides reviewers; it does not control review credit or guarantee availability.
+      options:
+        - Either report
+        - Human report
+        - Agent report
+      default: 0
   - type: textarea
     id: tools
     attributes:

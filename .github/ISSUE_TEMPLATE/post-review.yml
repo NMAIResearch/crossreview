@@ -50,3 +50,20 @@ body:
     attributes:
       label: Tools used
       description: Any AI you used for the review, and its vendor.
+  - type: dropdown
+    id: report_type
+    attributes:
+      label: Supporting report type
+      description: Provide one report, human or agent. Both types use the peer-review findings above; you do not need both reports.
+      options:
+        - Human report
+        - Agent report
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Supporting report
+      description: Paste your report or link to its public, redacted copy. Use the short human template or the detailed agent template in review-templates/. Report authorship, provenance fields and linked content are not automatically verified. Keep credentials and private information out.
+    validations:
+      required: true

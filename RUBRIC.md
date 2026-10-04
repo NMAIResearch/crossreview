@@ -49,6 +49,12 @@ A quote that matches only proves the words exist. Say whether it supports every 
 - **What you did not check.**
 - **Tools you used**, including any AI and its vendor.
 
+## Provide one supporting report
+
+Choose the short [human report](review-templates/HUMAN_REPORT.md) or the detailed [agent report](review-templates/AGENT_REPORT.md), taking the author's stated preference into account. The reviewer supplies one report; both are not required. Either type can earn credit even when it differs from the author's preference. Paste it into the supporting-report field or link to a public, redacted copy.
+
+Keep the claim verdicts and evidence in the peer-review form whichever report you choose. The report supplies experience or an execution record; it does not replace substantive review. An agent account is not independent verification by itself. The report type is declared by the reviewer; Crossreview does not verify its author, its provenance fields or linked content.
+
 ## Keep the status
 
 If you summarise another review, keep its verdicts. "Reviewed" is not a verdict.

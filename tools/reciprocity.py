@@ -17,6 +17,7 @@ import urllib.parse
 import urllib.request
 
 FREE_SUBMISSIONS = 1
+REPORT_TYPES = frozenset({"Human report", "Agent report"})
 REPO_URL_RE = re.compile(r"https://github\.com/([A-Za-z0-9-]{1,39})/([A-Za-z0-9._-]{1,100})(?:\.git)?/?(?=\s|$)")
 LOGIN_RE = re.compile(r"^[A-Za-z0-9-]{1,39}$")
 REPOSITORY_RE = re.compile(r"^[A-Za-z0-9-]{1,39}/[A-Za-z0-9._-]{1,100}$")
@@ -47,11 +48,15 @@ def parse_repo_url(body):
     return f"https://github.com/{owner}/{name}"
 
 
-def issue_field(body, label):
-    """Read one GitHub issue-form field without interpreting its content."""
-    for section in str(body or "").split("\n### "):
+def issue_field(body, label, *, final=False):
+    """Read an issue-form field; final=True preserves all final-textarea content."""
+    sections = str(body or "").split("\n### ")
+    for index, section in enumerate(sections):
         heading, separator, value = section.removeprefix("### ").partition("\n")
         if separator and heading.strip() == label:
+            if final:
+                # The final textarea owns all remaining Markdown, including headings.
+                value = "\n### ".join([value, *sections[index + 1:]])
             value = value.strip()
             return "" if value == "_No response_" else value
     return ""
@@ -86,6 +91,10 @@ def ledger(issues):
         if not issue_field(item.get("body"), "First pass, before reading the author's explanation"):
             continue
         if not issue_field(item.get("body"), "What you did not check"):
+            continue
+        if issue_field(item.get("body"), "Supporting report type") not in REPORT_TYPES:
+            continue
+        if not issue_field(item.get("body"), "Supporting report", final=True):
             continue
         reviewed.setdefault(author, set()).add(int(reference))
     result = {}
