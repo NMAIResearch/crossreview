@@ -3,7 +3,9 @@
 (() => {
   const films = [
     { title: "POV", file: "neural", position: "center", artist: "NMAI Research", year: 2026,
-      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/" }
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Gemini" },
+    { title: "Probability Waves", file: "plushy-probability", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "" }
   ];
   const videos = [document.querySelector("#film-a"), document.querySelector("#film-b")];
   const poster = document.querySelector("#poster");
@@ -71,6 +73,9 @@
     document.querySelector("#credit-artist").textContent = film.artist;
     document.querySelector("#credit-artist").href = film.url;
     document.querySelector("#credit-work").textContent = `‘${film.title}’ · ${film.year}`;
+    const toolCredit = document.querySelector(".credit-tool");
+    toolCredit.textContent = film.tool;
+    toolCredit.hidden = !film.tool;
     document.querySelector("#progress").style.transform = "scaleX(0)";
     for (const option of options) {
       const selected = Number(option.dataset.film) === index;
@@ -114,6 +119,31 @@
   let height = 0;
   const field = typeof window.CrossreviewBranchingField === "function"
     ? new window.CrossreviewBranchingField() : null;
+  let pointerPosition = null;
+
+  function interactionPoint(event) {
+    const box = reading.getBoundingClientRect();
+    if (!box.width || !box.height) return null;
+    return { x: (event.clientX - box.left) / box.width, y: (event.clientY - box.top) / box.height };
+  }
+
+  function clearInteraction() {
+    pointerPosition = null;
+    if (field) field.clearInteraction();
+  }
+
+  reading.addEventListener("pointermove", event => {
+    if (!field || !motion || reduced.matches || event.pointerType === "touch") return;
+    pointerPosition = { clientX: event.clientX, clientY: event.clientY };
+  }, { passive: true });
+  reading.addEventListener("pointerleave", clearInteraction);
+  reading.addEventListener("pointercancel", clearInteraction);
+  reading.addEventListener("pointerdown", event => {
+    if (!field || !motion || reduced.matches || event.button !== 0 ||
+        event.target.closest("a, button, input, textarea, select, summary, pre")) return;
+    const point = interactionPoint(event);
+    if (point) field.pulse(point.x, point.y);
+  }, { passive: true });
 
   // Resizing changes the drawing scale, never the accumulated lineage.
   function sizeBackground() {
@@ -132,6 +162,10 @@
 
   function drawBackground(time) {
     if (!ctx || !field) return;
+    if (pointerPosition && motion && !reduced.matches) {
+      const point = interactionPoint(pointerPosition);
+      if (point) field.setPointer(point.x, point.y);
+    }
     field.advance(time);
     field.draw(ctx, width, height, time);
   }
@@ -155,6 +189,10 @@
   }
 
   function synchronise() {
+    if (!motion || document.hidden || reduced.matches) {
+      clearInteraction();
+      drawBackground(elapsed);
+    }
     for (let i = 0; i < videos.length; i++) {
       if (!motion || document.hidden || !heroVisible || i !== active) videos[i].pause();
     }

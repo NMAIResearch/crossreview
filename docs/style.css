@@ -79,6 +79,8 @@ h2, h3, p { margin-top: 0; }
 .steps p, .role-grid p { font-size: 13px; color: var(--muted); line-height: 1.85; margin-bottom: 0; }
 .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 34px 0 84px; }
 .role-grid article { padding: 30px 34px; border: 1px solid var(--line); background: #111a1680; border-radius: 3px; }
+.role-grid article, .steps li { transition: border-color 180ms ease, background-color 180ms ease; }
+.role-grid article:hover, .role-grid article:focus-within { border-color: #d6f39a78; background-color: #17251bc9; }
 .role-symbol { display: block; color: var(--accent); font-size: 33px; margin-bottom: 25px; }
 .role-grid p { max-width: 440px; }
 .status-pill { border: 1px solid #d6f39a40; border-radius: 20px; padding: 7px 12px; font-size: 10px; color: var(--accent); }
@@ -139,6 +141,7 @@ footer p { font-size: 11px; line-height: 1.7; margin: 14px 0 0; color: #a2ada7; 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .films video { transition: none; }
+  .role-grid article, .steps li { transition: none; }
 }
 
 /* Public-sharing notice and the complete, selectable AI message. */

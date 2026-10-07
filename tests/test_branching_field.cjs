@@ -87,3 +87,33 @@ test('growth is balanced between left and right rather than leaning one way', ()
     assert.ok(share>.40&&share<.60,`rightward share ${share}`);
   }
 });
+
+test('pointer projection changes presentation without rewriting the stored lineage', () => {
+  const f = new Field();
+  const history = JSON.stringify({nodes:f.nodes, branches:f.branches, seed:f.seed});
+  f.setPointer(.5, .5);
+  const point = f.projected(.48, .5, 1000, 1000);
+  assert.ok(point.x > 480 && point.x <= 492);
+  assert.equal(point.y, 500);
+  assert.equal(JSON.stringify({nodes:f.nodes, branches:f.branches, seed:f.seed}), history);
+  assert.deepEqual(f.projected(.1, .1, 1000, 1000), {x:100, y:100, influence:0});
+});
+
+test('invalid pointer and pulse inputs cannot introduce non-finite drawing coordinates', () => {
+  const f = new Field();
+  f.setPointer(NaN, .5); f.setPointer(.5, Infinity);
+  f.pulse(Infinity, .5); f.pulse(.5, NaN);
+  assert.equal(f.pointer, null); assert.equal(f.pulses.length, 0);
+  f.setPointer(-1, 3); f.pulse(3, -1);
+  assert.deepEqual(f.pointer, {x:0, y:1});
+  assert.equal(f.pulses[0].x, 1); assert.equal(f.pulses[0].y, 0);
+});
+
+test('rapid input stays bounded and expired pulses are removed', () => {
+  const f = new Field();
+  for (let i = 0; i < 10000; i++) f.pulse(.5, .5);
+  assert.equal(f.pulses.length, 6);
+  f.advance(1500); assert.equal(f.pulses.length, 0);
+  f.setPointer(.3, .5); f.pulse(.3, .5); f.clearInteraction();
+  assert.equal(f.pointer, null); assert.equal(f.pulses.length, 0);
+});

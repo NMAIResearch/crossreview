@@ -9,6 +9,8 @@
       this.nextId = 0;
       this.maxNodes = 120;
       this.maxBranches = 400;
+      this.pointer = null;
+      this.pulses = [];
       this.time = -48000;
       this.origin = this.time;
       this.addNode(.09, .94, 1, -48000, 6);
@@ -30,6 +32,59 @@
       if (draw < .65) return 1;
       if (draw < .93) return 2 + Math.floor(this.random() * 4);
       return 8 + Math.floor(this.random() * 13);
+    }
+
+    setPointer(x, y) {
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      this.pointer = { x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)) };
+    }
+
+    clearInteraction() {
+      this.pointer = null;
+      this.pulses = [];
+    }
+
+    pulse(x, y) {
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      this.pulses.push({ x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)), born: this.time });
+      this.pulses = this.pulses.slice(-6);
+    }
+
+    projected(x, y, width, height) {
+      const point = { x: x * width, y: y * height, influence: 0 };
+      if (!this.pointer) return point;
+      const dx = this.pointer.x * width - point.x;
+      const dy = this.pointer.y * height - point.y;
+      const distance = Math.hypot(dx, dy);
+      point.influence = Math.max(0, 1 - distance / 210);
+      // Drawing offsets leave the stored lineage and its growth history unchanged.
+      const offset = 12 * point.influence * point.influence;
+      if (distance > 0) { point.x += dx / distance * offset; point.y += dy / distance * offset; }
+      return point;
+    }
+
+    drawInteraction(ctx, width, height, time) {
+      if (this.pointer) {
+        const x = this.pointer.x * width, y = this.pointer.y * height;
+        const glow = ctx.createRadialGradient(x, y, 0, x, y, 210);
+        glow.addColorStop(0, "rgba(175,224,145,.13)");
+        glow.addColorStop(.42, "rgba(106,169,150,.045)");
+        glow.addColorStop(1, "rgba(106,169,150,0)");
+        ctx.fillStyle = glow; ctx.fillRect(x - 210, y - 210, 420, 420);
+        const nearby = this.nodes.map(n => this.projected(n.x, n.y, width, height))
+          .filter(p => p.influence > 0).sort((a, b) => b.influence - a.influence).slice(0, 6);
+        for (const point of nearby) {
+          ctx.strokeStyle = `rgba(214,243,154,${point.influence * .46})`;
+          ctx.lineWidth = .7; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(point.x, point.y); ctx.stroke();
+        }
+      }
+      for (const pulse of this.pulses) {
+        const age = (time - pulse.born) / 1400;
+        if (age < 0 || age > 1) continue;
+        ctx.strokeStyle = `rgba(214,243,154,${(1 - age) * .55})`;
+        ctx.lineWidth = 1; ctx.beginPath();
+        ctx.arc(pulse.x * width, pulse.y * height, 8 + 120 * age, 0, Math.PI * 2); ctx.stroke();
+      }
     }
 
     addNode(x, y, direction, born, count = this.offspring()) {
@@ -62,6 +117,7 @@
     advance(time) {
       if (!Number.isFinite(time) || time < this.time) return;
       this.time = time;
+      this.pulses = this.pulses.filter(p => time - p.born <= 1400);
       for (const branch of this.branches) {
         if (branch.lasting && !branch.settled && time >= branch.born + branch.duration) {
           branch.settled = true;
@@ -81,17 +137,19 @@
       ctx.clearRect(0, 0, width, height);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
+      this.drawInteraction(ctx, width, height, time);
       for (const b of this.branches) {
         const age = time - b.born;
         const growth = Math.max(0, Math.min(1, age / b.duration));
         const fade = b.lasting ? 1 : Math.max(0, 1 - Math.max(0, age - b.duration - b.hold) / b.fade);
-        const x = b.x * width, y = b.y * height;
-        const endX = b.endX * width, endY = b.endY * height;
+        const start = this.projected(b.x, b.y, width, height);
+        const end = this.projected(b.endX, b.endY, width, height);
+        const x = start.x, y = start.y, endX = end.x, endY = end.y;
         const elbowY = y + (endY - y) * .6;
         const points = [[x, y], [x, elbowY], [endX, elbowY], [endX, endY]];
         const lengths = [Math.abs(elbowY-y), Math.abs(endX-x), Math.abs(endY-elbowY)];
         let remaining = lengths.reduce((a, v) => a + v, 0) * growth;
-        ctx.strokeStyle = `rgba(128,184,159,${(b.lasting ? .35 : .30) * fade})`;
+        ctx.strokeStyle = `rgba(148,204,168,${((b.lasting ? .35 : .30) + Math.max(start.influence, end.influence) * .45) * fade})`;
         ctx.lineWidth = b.lasting ? 1.1 : .7;
         ctx.beginPath();ctx.moveTo(x, y);
         let tipX = x, tipY = y;
@@ -110,14 +168,15 @@
         }
       }
       for (const n of this.nodes) {
-        const x = n.x * width, y = n.y * height;
+        const point = this.projected(n.x, n.y, width, height);
+        const x = point.x, y = point.y;
         const pulse = .82 + .18 * Math.sin(time * .00035 + n.phase);
         const glow = ctx.createRadialGradient(x, y, 0, x, y, 13);
-        glow.addColorStop(0, `rgba(214,243,154,${.42 * pulse})`);
+        glow.addColorStop(0, `rgba(214,243,154,${(.42 + .4 * point.influence) * pulse})`);
         glow.addColorStop(1, "rgba(214,243,154,0)");
         ctx.fillStyle = glow;ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();
         ctx.fillStyle = `rgba(220,245,184,${.82 * pulse})`;
-        ctx.beginPath();ctx.arc(x,y,1.8,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(x,y,1.8 + point.influence * 1.5,0,Math.PI*2);ctx.fill();
       }
     }
   }
