@@ -11,3 +11,7 @@ The MIT licence applies to the software. It does not grant a separate licence to
 Probability Waves, 2026. Artwork by NMAI Research, supplied for Crossreview. The web copy keeps the original video stream and omits its audio track and container metadata for silent background playback. The poster is a frame from the supplied clip.
 
 The software licence does not grant a separate licence to redistribute this media.
+
+Drive, 2026. Artwork by NMAI Research. Drive is supplied by NMAI Research; the web copy keeps the encoded video stream and omits audio and container metadata; the poster is a supplied-video frame.
+
+The software licence does not grant a separate licence to redistribute this media.
