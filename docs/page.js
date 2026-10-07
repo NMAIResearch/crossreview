@@ -5,9 +5,9 @@
     { title: "POV", file: "neural", position: "center", artist: "NMAI Research", year: 2026,
       kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Gemini" },
     { title: "Probability Waves", file: "plushy-probability", position: "center", artist: "NMAI Research", year: 2026,
-      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "" },
-    { title: "Drive", file: "drive", position: "center", artist: "NMAI Research", year: 2026,
-      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "" }
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Google Flow Studio Omni 1.1" },
+    { title: "2D", file: "drive", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Google Flow Studio Omni 1.1" }
   ];
   const videos = [document.querySelector("#film-a"), document.querySelector("#film-b")];
   const poster = document.querySelector("#poster");
