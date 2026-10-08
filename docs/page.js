@@ -2,6 +2,14 @@
 "use strict";
 (() => {
   const films = [
+    { title: "Inside Out", file: "inside-out", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Made with Claude Opus 5.5 (Anthropic) in Claude Code" },
+    { title: "Eye to Galaxy", file: "eye-to-galaxy", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Made with Claude Opus 5.5 (Anthropic) in Claude Code" },
+    { title: "Galactic Helix", file: "galactic-helix", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Made with Claude Opus 5.5 (Anthropic) in Claude Code" },
+    { title: "To the Edge", file: "to-the-edge", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Made with Claude Opus 5.5 (Anthropic) in Claude Code" },
     { title: "POV", file: "neural", position: "center", artist: "NMAI Research", year: 2026,
       kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Gemini" },
     { title: "Probability Waves", file: "plushy-probability", position: "center", artist: "NMAI Research", year: 2026,
