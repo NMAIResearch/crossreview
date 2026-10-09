@@ -11,13 +11,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .skip { position: absolute; z-index: 20; top: 12px; left: 12px; padding: 12px; background: var(--ink); transform: translateY(-180%); }
 .skip:focus { transform: none; }
 .hero { height: 100svh; min-height: 720px; max-height: 1300px; position: relative; isolation: isolate; overflow: hidden; background: #172822; }
+/* The films print each scene's title and subtitle in the top-left of the frame, down to row 121 of 1080. The nav starts
+   below that row at the film's displayed scale and crop (object-fit: cover), clearing them on desktop screens. */
+.hero { --hero-h: clamp(720px, 100vh, 1300px); --film-h: max(56.25vw, var(--hero-h)); --nav-top: max(30px, calc(var(--film-h) * 121 / 1080 - (var(--film-h) - var(--hero-h)) / 2 + 12px)); }
 .films, .films img, .films video, .hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
 .films { z-index: -3; }
 .films img, .films video { object-fit: cover; object-position: center; }
 .films video { opacity: 0; transition: opacity 900ms ease; }
 .films video.is-visible { opacity: 1; }
 .hero-shade { z-index: -1; background: linear-gradient(180deg, #050d0c80, transparent 28%, #060d0c0d 42%, #060d0ca6 76%, #060d0cf2), linear-gradient(90deg, #060d0c40, transparent 75%); }
-.nav { display: flex; align-items: center; justify-content: space-between; padding: 30px 4.4vw; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: var(--nav-top) 4.4vw 30px; }
 .wordmark { display: inline-flex; align-items: center; font-weight: 700; font-size: 27px; letter-spacing: -1.4px; }
 .mark { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #ffffff80; margin-right: 12px; font-size: 28px; line-height: 1; border-radius: 50%; font-weight: 400; }
 .dot { color: var(--accent); }
@@ -25,7 +28,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .nav-links a { padding: 10px 0; }
 .nav-links a:last-child { border-bottom: 1px solid #ffffff70; }
 .nav-links span { margin-left: 18px; }
-.art-credit { position: absolute; top: 106px; right: 4.4vw; z-index: 2; display: grid; gap: 4px; max-width: 260px; padding: 12px 16px; border: 1px solid #ffffff26; border-radius: 4px; background: #07110ee6; text-align: right; font-size: 12px; line-height: 1.4; }
+.art-credit { position: absolute; top: calc(var(--nav-top) + 76px); right: 4.4vw; z-index: 2; display: grid; gap: 4px; max-width: 260px; padding: 12px 16px; border: 1px solid #ffffff26; border-radius: 4px; background: #07110ee6; text-align: right; font-size: 12px; line-height: 1.4; }
 #credit-kind { color: #bbc7c0; font-size: 10px; }
 #credit-artist { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 #credit-artist:hover { color: var(--accent); }
