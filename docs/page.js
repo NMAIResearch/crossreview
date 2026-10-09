@@ -10,12 +10,12 @@
       kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Made with Claude Opus 5.5 (Anthropic) in Claude Code" },
     { title: "To the Edge", file: "to-the-edge", position: "center", artist: "NMAI Research", year: 2026,
       kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Made with Claude Opus 5.5 (Anthropic) in Claude Code. Data: McConnachie 2012 and 2MASS Redshift Survey via VizieR (CDS); WMAP, NASA / WMAP Science Team" },
-    { title: "POV", file: "neural", position: "center", artist: "NMAI Research", year: 2026,
-      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Gemini" },
     { title: "Probability Waves", file: "plushy-probability", position: "center", artist: "NMAI Research", year: 2026,
       kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Google Flow Studio Omni 1.1" },
     { title: "2D", file: "drive", position: "center", artist: "NMAI Research", year: 2026,
-      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Google Flow Studio Omni 1.1" }
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Google Flow Studio Omni 1.1" },
+    { title: "POV", file: "neural", position: "center", artist: "NMAI Research", year: 2026,
+      kind: "Artwork by", label: "Artwork", url: "https://nmairesearch.github.io/", tool: "Generated with Gemini" }
   ];
   const videos = [document.querySelector("#film-a"), document.querySelector("#film-b")];
   const poster = document.querySelector("#poster");
