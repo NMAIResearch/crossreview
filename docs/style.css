@@ -108,8 +108,8 @@ footer p { font-size: 11px; line-height: 1.7; margin: 14px 0 0; color: #a2ada7; 
   .art-credit { top: 89px; right: 6vw; max-width: 88vw; padding: 10px 12px; }
   .wordmark { font-size: 24px; }
   .mark { display: none; }
-  .nav-links { font-size: 11px; gap: 0; }
-  .nav-links a:first-child { display: none; }
+  .nav-links { font-size: 11px; gap: 14px; }
+  .nav-links a[href="#process"] { display: none; }
   .nav-links span { margin-left: 9px; }
   .hero-copy { left: 6vw; right: 6vw; bottom: 190px; }
   .hero-copy .eyebrow { font-size: 9px; margin-bottom: 22px; }
