@@ -127,12 +127,13 @@
   const reading = document.querySelector(".reading");
   let width = 0;
   let height = 0;
-  const field = typeof window.CrossreviewBranchingField === "function"
-    ? new window.CrossreviewBranchingField() : null;
+  const Field = window.CrossreviewExchangeField || window.CrossreviewBranchingField;
+  const field = typeof Field === "function" ? new Field() : null;
   let pointerPosition = null;
 
+  // The canvas stays in view while the section scrolls past, so pointer positions are measured against it.
   function interactionPoint(event) {
-    const box = reading.getBoundingClientRect();
+    const box = canvas.getBoundingClientRect();
     if (!box.width || !box.height) return null;
     return { x: (event.clientX - box.left) / box.width, y: (event.clientY - box.top) / box.height };
   }
@@ -155,11 +156,10 @@
     if (point) field.pulse(point.x, point.y);
   }, { passive: true });
 
-  // Resizing changes the drawing scale, never the accumulated lineage.
+  // Resizing changes the drawing scale, never the field's state. The canvas covers one viewport.
   function sizeBackground() {
-    const box = reading.getBoundingClientRect();
-    width = box.width;
-    height = box.height;
+    width = reading.clientWidth;
+    height = window.innerHeight;
     // Bound raster storage even when the review queue makes the page very tall.
     const scale = Math.min(devicePixelRatio || 1, 1.5,
       Math.sqrt(4000000 / Math.max(1, width * height)));
@@ -229,6 +229,7 @@
   const heroObserver = new IntersectionObserver(entries => { heroVisible = entries[0].isIntersecting; synchronise(); }, { threshold: 0 });
   heroObserver.observe(document.querySelector(".hero"));
   new ResizeObserver(sizeBackground).observe(reading);
+  window.addEventListener("resize", sizeBackground);
   sizeBackground();
   updateMotionButton();
   selectFilm(0);
