@@ -26,3 +26,9 @@ Four films, 2026, played in this order. Artwork by NMAI Research, made with Clau
 - To the Edge: the Milky Way, the Local Group, the galaxies around Laniakea, a simulated cosmic web and the microwave sky, looping back to the opening. Galaxy positions: McConnachie 2012, Astron. J. 144, 4, and the 2MASS Redshift Survey, Huchra et al. 2012, Astrophys. J. Suppl. Ser. 199, 26, both via the VizieR catalogue access tool, CDS, Strasbourg Astronomical Observatory, France (DOI 10.26093/cds/vizier). The cosmic web is a Zel'dovich-approximation simulation computed for the film, not observed data. Microwave sky: WMAP nine-year data, image credit NASA / WMAP Science Team.
 
 The software licence does not grant a separate licence to redistribute this media.
+
+## Music
+
+Pass It On Unfinished, 2026. An AI song by NMAI Research, made with Suno and supplied for Crossreview. The file `pass-it-on-unfinished.mp3` is a 128 kbit/s MP3 copy of the song's master, with no tags except its title and artist. It plays only after a reader presses the page's Music button.
+
+Licence: CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/). The MIT licence applies to the software, not to this recording.

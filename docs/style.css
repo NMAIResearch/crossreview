@@ -44,6 +44,9 @@ h1 em { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter
 .hero-bottom p { font-size: 15px; line-height: 1.65; margin: 0; color: #e7eae3; }
 .round-link { display: grid; place-items: center; width: 54px; height: 54px; border: 1px solid #ffffff70; border-radius: 50%; font-size: 26px; transition: background 180ms; }
 .round-link:hover { background: #ffffff20; }
+.music { margin: 0 16px 0 auto; min-height: 44px; padding: 0 16px; border: 1px solid #ffffff70; border-radius: 22px; background: #12191570; font-size: 11px; white-space: nowrap; transition: background 180ms; }
+.music:hover { background: #ffffff20; }
+.music[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 .film-bar { position: absolute; bottom: 0; left: 4.4vw; right: 4.4vw; min-height: 103px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid #ffffff40; }
 .film-caption { display: flex; gap: 16px; align-items: center; font-size: 12px; }
 #film-number { font-variant-numeric: tabular-nums; color: var(--accent); font-size: 10px; letter-spacing: 1px; }
@@ -94,6 +97,7 @@ footer { border-top: 1px solid var(--line); padding: 38px 0 48px; display: flex;
 footer .wordmark { font-size: 24px; }
 footer p { font-size: 11px; line-height: 1.7; margin: 14px 0 0; color: #a2ada7; }
 .preview-note { text-align: right; }
+.music-credit a { text-decoration: underline; text-underline-offset: 3px; }
 .no-script { margin: 0; padding: 16px; font-size: 14px; background: #273326; }
 @media (max-width: 900px) {
   .reference-label { display: none; }
@@ -117,6 +121,7 @@ footer p { font-size: 11px; line-height: 1.7; margin: 14px 0 0; color: #a2ada7; 
   .hero-bottom { margin-top: 24px; }
   .hero-bottom p { font-size: 13px; }
   .round-link { width: 44px; height: 44px; }
+  .music { margin-right: 12px; padding: 0 12px; font-size: 10px; }
   .film-bar { left: 6vw; right: 6vw; min-height: 153px; flex-direction: column; align-items: stretch; justify-content: center; gap: 18px; padding: 12px 0 16px; }
   .film-actions { justify-content: space-between; gap: 8px; }
   .film-option { width: 56px; }

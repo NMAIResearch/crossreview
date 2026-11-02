@@ -7,7 +7,7 @@
   <meta name="description" content="Review for review. Swap reviews of work made with AI.">
   <link rel="canonical" href="https://nmairesearch.com/crossreview/">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="NM AI Research">
+  <meta property="og:site_name" content="NMAI Research">
   <meta property="og:title" content="crossreview | review for review">
   <meta property="og:description" content="Review for review. Swap reviews of work made with AI.">
   <meta property="og:url" content="https://nmairesearch.com/crossreview/">
@@ -16,14 +16,15 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="crossreview: Made with AI. Seen by you.">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"crossreview","url":"https://nmairesearch.com/crossreview/","description":"Review for review. Swap reviews of work made with AI.","publisher":{"@type":"Organization","name":"NM AI Research","url":"https://nmairesearch.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"crossreview","url":"https://nmairesearch.com/crossreview/","description":"Review for review. Swap reviews of work made with AI.","publisher":{"@type":"Organization","name":"NMAI Research","url":"https://nmairesearch.com/"}}</script>
   <meta name="color-scheme" content="dark">
   <title>crossreview | review for review</title>
-  <link rel="stylesheet" href="style.css?v=fb0efaa8">
+  <link rel="stylesheet" href="style.css?v=e1c247fc">
   <script src="exchange-field.js?v=85e4a60d" defer></script>
   <script src="page.js?v=c907ebaa" defer></script>
   <script src="review-board.js?v=98bd9ccb" defer></script>
   <script src="site.js?v=8d167a5b" defer></script>
+  <script src="music.js?v=6e224720" defer></script>
 </head>
 <body>
   <a class="skip" href="#exchange">Skip to the exchange</a>
@@ -49,6 +50,7 @@
       <h1>Made with AI.<br>Seen by <em>you.</em></h1>
       <div class="hero-bottom">
         <p>A fresh pair of eyes.<br>A fair exchange of reviews.</p>
+        <button type="button" id="music" class="music" aria-pressed="false">Music off</button>
         <a class="round-link" href="#exchange" aria-label="Explore the review exchange"><span aria-hidden="true">↓</span></a>
       </div>
     </div>
@@ -131,9 +133,10 @@ Never ask me to paste passwords, access tokens or keys, or inspect or print thos
         <p class="lead">See who has picked up a project before joining in. Reviewers may share their domain experience to help readers weigh their perspective. It is optional and self-described; the evidence still matters.</p>
         <div class="queue-grid"><div><h3>Waiting for review</h3><div id="open"><p>Loading submissions...</p></div></div><div><h3>Recent reviews</h3><div id="done"><p>Loading reviews...</p></div></div></div>
       </section>
-      <footer><div><a class="wordmark" href="#top">crossreview<span class="dot">.</span></a><p>crossreview is run by NM AI Research. Review the work, not the person.</p></div><p class="preview-note">AI-assisted work. Human judgement.<br><a href="https://github.com/NMAIResearch/crossreview">Code and review forms</a></p></footer>
+      <footer><div><a class="wordmark" href="#top">crossreview<span class="dot">.</span></a><p>crossreview is run by NMAI Research. Review the work, not the person.</p><p class="music-credit">Pass It On Unfinished: an AI song by NMAI Research, made with Suno. <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="license">Licence: CC BY-NC 4.0</a></p></div><p class="preview-note">AI-assisted work. Human judgement.<br><a href="https://github.com/NMAIResearch/crossreview">Code and review forms</a></p></footer>
     </div>
   </main>
   <noscript><p class="no-script">The film remains a still image. <a href="https://github.com/NMAIResearch/crossreview/issues">Browse submissions and reviews on GitHub.</a></p></noscript>
+  <audio id="music-player" preload="none" loop></audio>
 </body>
 </html>

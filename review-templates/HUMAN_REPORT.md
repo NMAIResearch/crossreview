@@ -32,4 +32,4 @@ Short answers are fine. Use "not tried" or "unsure" when appropriate. Use your o
 
 Share only the details needed to explain the experience. Remove credentials and private information. Your account describes your experience; it does not establish general effectiveness or replace claim-by-claim review.
 
-Adapted from NM AI Research's research starter feedback forms.
+Adapted from NMAI Research's research starter feedback forms.

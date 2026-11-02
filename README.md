@@ -96,4 +96,4 @@ The static site is in `docs/`. GitHub Pages serves that directory; issue forms a
 
 ## Attribution and licence
 
-Created by NM AI Research with AI-assisted design and implementation. Claude Opus proposed wording and reviewed an earlier candidate; OpenAI GPT-6 checked and implemented the changes. OpenAI GPT-6 also drafted the supporting-report templates and report-choice changes. The author makes release and moderation decisions. Software is MIT licensed; media has its own attribution and terms in [docs/media/README.md](docs/media/README.md).
+Created by NMAI Research with AI-assisted design and implementation. Claude Opus proposed wording and reviewed an earlier candidate; OpenAI GPT-6 checked and implemented the changes. OpenAI GPT-6 also drafted the supporting-report templates and report-choice changes. The author makes release and moderation decisions. Software is MIT licensed; media has its own attribution and terms in [docs/media/README.md](docs/media/README.md).

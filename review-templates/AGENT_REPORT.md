@@ -63,4 +63,4 @@ Record commands actually attempted, including failures and adaptations. Use safe
 
 Share a redacted account with the necessary evidence excerpts. Keep credentials, personal information, private source material and internal paths out. A full transcript is not required. The person responsible for the account approves any public sharing.
 
-Adapted from NM AI Research's research starter feedback forms.
+Adapted from NMAI Research's research starter feedback forms.
